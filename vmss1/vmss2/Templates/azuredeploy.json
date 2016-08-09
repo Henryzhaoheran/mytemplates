@@ -1,0 +1,80 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": { },
+  "variables": {
+    "vtmMarketplacePlan": {
+      "name": "4",
+      "publisher": "bitnami",
+      "product": "exoplatform"
+    },
+    "osType": {
+      "publisher": "bitnami",
+      "offer": "exoplatform",
+      "sku": "4",
+      "version": "latest"
+    },
+    "imageReference": "[variables('osType')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "vmsscooldemo",
+      "location": "westus",
+      "apiVersion": "2016-03-30",
+      "tags": {
+        "displayName": "VMScaleSet"
+      },
+      "sku": {
+        "name": "Standard_A1",
+        "tier": "Standard",
+        "capacity": "3"
+      },
+      "plan": "[variables('vtmMarketplacePlan')]",
+      "properties": {
+        "overprovision": "true",
+        "upgradePolicy": {
+          "mode": "Manual"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "https://stohrcooldemo.blob.core.windows.net/vhds"
+              ],
+              "name": "batosdisk",
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+            "imageReference": "[variables('imageReference')]"
+          },
+          "osProfile": {
+            "computerNamePrefix": "node0",
+            "adminUsername": "shareadmin",
+            "adminPassword": "Password01!111"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "netconfiginfo",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "nic",
+                      "properties": {
+                        "subnet": {
+                          "id": "/subscriptions/484e3bdc-090a-4c18-871a-90747c6445fa/resourceGroups/cooldemo/providers/Microsoft.Network/virtualNetworks/vnetcooldemo/subnets/vmsssubnet"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
