@@ -1,0 +1,188 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmssname": {
+      "type": "string"
+    },
+    "resourceLocation": {
+      "type": "string",
+      "defaultValue": "West US",
+      "allowedValues": [
+        "East US",
+        "East US 2",
+        "West US",
+        "Central US",
+        "South Central US",
+        "North Central US",
+        "North Europe",
+        "West Europe",
+        "Southeast Asia",
+        "East Asia",
+        "Japan West",
+        "Japan East",
+        "Brazil South",
+        "Australia East",
+        "Australia Southeast"
+      ],
+      "metadata": {
+        "description": "Azure region where all resources will be deployed. This is distinct from resource group location."
+      }
+    },
+    "vmSku": {
+      "type": "string",
+      "defaultValue": "Standard_DS3",
+      "metadata": {
+        "description": "Size of VMs in the VM Scale Set."
+      }
+    },
+    "instanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of VM instances (100 or less)."
+      },
+      "maxValue": 100
+    },
+    "StorageContainer": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage container link, for example: http://stoAccount.blob.core.windows.net/vhds"
+      }
+    },
+    "osDiskName": {
+      "type": "string",
+      "metadata": {
+        "description": "OS disk Name"
+      }
+    },
+    "computerNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Computer Name Prefix"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username on all VMs."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
+      }
+    },
+    "subnetId": {
+      "type": "string",
+      "metadata": {
+        "description": "subnet ID information, vnet1, subnet2 ID"
+      }
+    },
+    "AppGWBackendPoolID": {
+      "type": "string",
+      "metadata": {
+        "description": "Application Gateway Backend Addresses Pool ID"
+      }
+    },
+    "LBInboundNatPoolID": {
+      "type": "string",
+      "metadata": {
+        "description": "Load Balancer Inbound NAT Pool ID,  lb1 ID"
+      }
+    },
+    "upgradePolicy": {
+      "type": "string",
+      "defaultValue": "Manual",
+      "allowedValues": [
+        "Manual",
+        "Automatic"
+      ]
+    }
+  },
+  "variables": {
+    "vtmMarketplacePlan": {
+      "name": "4",
+      "publisher": "bitnami",
+      "product": "exoplatform"
+    },
+    "osType": {
+      "publisher": "bitnami",
+      "offer": "exoplatform",
+      "sku": "4",
+      "version": "4.3.4"
+    },
+    "imageReference": "[variables('osType')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[parameters('vmssname')]",
+      "location": "[parameters('resourceLocation')]",
+      "apiVersion": "2016-03-30",
+      "tags": {
+        "displayName": "VMScaleSet"
+      },
+      "sku": {
+        "name": "[parameters('vmSku')]",
+        "tier": "Standard",
+        "capacity": "[parameters('instanceCount')]"
+      },
+      "plan": "[variables('vtmMarketplacePlan')]",
+      "properties": {
+        "overprovision": "true",
+        "upgradePolicy": {
+          "mode": "Automatic"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "[parameters('StorageContainer')]"
+              ],
+              "name": "[parameters('osDiskName')]",
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+            "imageReference": "[variables('imageReference')]"
+          },
+          "osProfile": {
+            "computerNamePrefix": "[parameters('computerNamePrefix')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "netconfiginfo",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig",
+                      "properties": {
+                        "subnet": {
+                          "id": "[parameters('subnetId')]"
+                        },
+                        "ApplicationGatewayBackendAddressPools": [
+                          {
+                            "id": "[parameters('AppGWBackendPoolID')]"
+                          }
+                        ],
+                        "loadBalancerInboundNatPools": [
+                          {
+                            "id": "[parameters('LBInboundNatPoolID')]"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

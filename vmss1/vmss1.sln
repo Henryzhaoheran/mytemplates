@@ -7,6 +7,10 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmss1", "vmss1\vmss1.deploy
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmss2", "vmss2\vmss2.deployproj", "{BFF3668D-EBB2-4C1D-AAA2-E97583F0B675}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmss3", "vmss3\vmss3.deployproj", "{8D1EEC8B-532F-467E-B9ED-A4C29DA124EE}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmssCX", "vmssCX\vmssCX.deployproj", "{2E32ECD6-2BDB-466E-802B-AD607ECF7F44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{BFF3668D-EBB2-4C1D-AAA2-E97583F0B675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFF3668D-EBB2-4C1D-AAA2-E97583F0B675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFF3668D-EBB2-4C1D-AAA2-E97583F0B675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D1EEC8B-532F-467E-B9ED-A4C29DA124EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1EEC8B-532F-467E-B9ED-A4C29DA124EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1EEC8B-532F-467E-B9ED-A4C29DA124EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1EEC8B-532F-467E-B9ED-A4C29DA124EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E32ECD6-2BDB-466E-802B-AD607ECF7F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E32ECD6-2BDB-466E-802B-AD607ECF7F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E32ECD6-2BDB-466E-802B-AD607ECF7F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E32ECD6-2BDB-466E-802B-AD607ECF7F44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
