@@ -13,6 +13,8 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmssCX", "vmssCX\vmssCX.dep
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "sg1", "sg1\sg1.deployproj", "{027AC4B1-9D79-45B6-A413-D24AAF17DDE7}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "sg2", "sg2\sg2.deployproj", "{0B622813-EC03-4735-BBFF-6BF959C9C9B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{027AC4B1-9D79-45B6-A413-D24AAF17DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{027AC4B1-9D79-45B6-A413-D24AAF17DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{027AC4B1-9D79-45B6-A413-D24AAF17DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B622813-EC03-4735-BBFF-6BF959C9C9B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B622813-EC03-4735-BBFF-6BF959C9C9B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B622813-EC03-4735-BBFF-6BF959C9C9B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B622813-EC03-4735-BBFF-6BF959C9C9B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
