@@ -21,6 +21,8 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vnet1", "vnet1\vnet1.deploy
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "publicIP1", "publicIP1\publicIP1.deployproj", "{4FE80A12-7E03-41FA-9D49-539B74AC8B9B}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "lb1", "lb1\lb1.deployproj", "{8BF0D3FF-60F6-4C2A-ADC5-B9BADC9E62D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{4FE80A12-7E03-41FA-9D49-539B74AC8B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FE80A12-7E03-41FA-9D49-539B74AC8B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FE80A12-7E03-41FA-9D49-539B74AC8B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF0D3FF-60F6-4C2A-ADC5-B9BADC9E62D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF0D3FF-60F6-4C2A-ADC5-B9BADC9E62D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF0D3FF-60F6-4C2A-ADC5-B9BADC9E62D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF0D3FF-60F6-4C2A-ADC5-B9BADC9E62D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
