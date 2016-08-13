@@ -1,0 +1,58 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmssname": {
+      "value": "vmsscooldemo"
+    },
+    "resourceLocation": {
+      "value": "West US"
+    },
+    "vmSize": {
+      "value": "Standard_DS1"
+    },
+    "instanceCount": {
+      "value": 3
+    },
+    "storageAccountName": {
+      "value": "heranstor5"
+    },
+    "storAccountType": {
+      "value": "Premium_LRS"
+    },
+    "osDiskName": {
+      "value": "osdisk"
+    },
+    "computerNamePrefix": {
+      "value": "mycomp"
+    },
+    "vnetName": {
+      "value": "heranvnet3"
+    },
+    "vnetAddrPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "subnetName1": {
+      "value": "vnet3sub1"
+    },
+    "subnet1Prefix": {
+      "value": "10.3.1.0/24"
+    },
+    "subnetName2": {
+      "value": "vnet3sub2"
+    },
+    "subnet2Prefix": {
+      "value": "10.3.2.0/24"
+    },
+    "PublicIPName1": {
+      "value": "pip1"
+    },
+    "PublicIPName2": {
+      "value": "pip2"
+    },
+    "lbName": {"value": "lb1"},
+    "upgradePolicy": {
+      "value": "Manual"
+    }
+  }
+}

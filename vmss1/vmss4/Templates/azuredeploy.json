@@ -1,0 +1,313 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmssname": {
+      "type": "string"
+    },
+    "resourceLocation": {
+      "type": "string",
+      "defaultValue": "West US",
+      "allowedValues": [
+        "East US",
+        "East US 2",
+        "West US",
+        "Central US",
+        "South Central US",
+        "North Central US",
+        "North Europe",
+        "West Europe",
+        "Southeast Asia",
+        "East Asia",
+        "Japan West",
+        "Japan East",
+        "Brazil South",
+        "Australia East",
+        "Australia Southeast"
+      ],
+      "metadata": {
+        "description": "Azure region where all resources will be deployed. This is distinct from resource group location."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "description": "Size of VMs in the VM Scale Set."
+      }
+    },
+    "instanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of VM instances (100 or less)."
+      },
+      "maxValue": 100
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage Account Name."
+      }
+    },
+    "storAccountType": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "osDiskName": {
+      "type": "string",
+      "defaultValue": "myOsDisk",
+      "metadata": {
+        "description": "OS disk Name"
+      }
+    },
+    "computerNamePrefix": {
+      "type": "string",
+      "defaultValue": "node0",
+      "metadata": {
+        "description": "Computer Name Prefix"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username on all VMs."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
+      }
+    },
+    "vnetName": {
+      "type": "string"
+    },
+    "vnetAddrPrefix": {
+      "type": "string"
+    },
+    "subnetName1": {
+      "type": "string"
+    },
+    "subnet1Prefix": {
+      "type": "string"
+    },
+    "subnetName2": {
+      "type": "string"
+    },
+    "subnet2Prefix": {
+      "type": "string"
+    },
+    "PublicIPName1": {
+      "type": "string"
+    },
+    "PublicIPName2": {
+      "type": "string"
+    },
+    "lbname": {
+      "type": "string"
+    },
+    "upgradePolicy": {
+      "type": "string",
+      "allowedValues": [
+        "Manual",
+        "Automatic"
+      ]
+    }
+  },
+  "variables": {
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+    "subnetId1": "[concat(variables('vnetID'), '/subnets/', parameters('subnetName1') )]",
+    "pipID2": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('PublicIPName2'))]",
+    "lbInNatPoolName": "lbinnatpool",
+    "lbId": "[resourceId('Microsoft.Network/loadBalancers', parameters('lbname'))]",
+    "lbFeIpConfID": "[concat(variables('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]",
+    "lbFePortRanStart": 5000,
+    "lbFePortRanEnd": 5100,
+    "lbBePort": 22,
+    "lbBeAddrPoolName": "BackendAddressPool",
+    "lbBeAddrPoolId": "[concat(variables('lbId'), '/backendAddressPools/', variables('lbBeAddrPoolName'))]",
+    "lbInNatPoolId": "[concat(variables('lbId'), '/inboundNatPools/', variables('lbInNatPoolName'))]",
+    "vtmMarketplacePlan": {
+      "name": "4",
+      "publisher": "bitnami",
+      "product": "exoplatform"
+    },
+    "osType": {
+      "publisher": "bitnami",
+      "offer": "exoplatform",
+      "sku": "4",
+      "version": "4.3.4"
+    },
+    "imageReference": "[variables('osType')]",
+    "storageContainer": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/vhds')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('PublicIPName1')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('resourceLocation')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('PublicIPName2')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('resourceLocation')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "name": "[parameters('lbName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('resourceLocation')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('PublicIPName2'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "loadBalancerFrontEnd",
+            "properties": {
+              "publicIPAddress": { "id": "[variables('pipID2')]" }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "[variables('lbBeAddrPoolName')]"
+          }
+        ],
+        "inboundNatPools": [
+          {
+            "name": "[variables('lbInNatPoolName')]",
+            "properties": {
+              "frontendIPConfiguration": { "id": "[variables('lbFeIpConfID')]" },
+              "protocol": "tcp",
+              "frontendPortRangeStart": "[variables('lbFePortRanStart')]",
+              "frontendPortRangeEnd": "[variables('lbFePortRanEnd')]",
+              "backendPort": "[variables('lbBePort')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('resourceLocation')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [ "[parameters('vnetAddrPrefix')]" ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName1')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnetName2')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]"
+            }
+          }
+
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('storageAccountName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('resourceLocation')]",
+      "properties": {
+        "accountType": "[parameters('storAccountType')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[parameters('vmssname')]",
+      "location": "[parameters('resourceLocation')]",
+      "apiVersion": "2016-03-30",
+      "tags": {
+        "displayName": "VMScaleSet"
+      },
+      "sku": {
+        "name": "[parameters('vmSize')]",
+        "tier": "Standard",
+        "capacity": "[parameters('instanceCount')]"
+      },
+      "plan": "[variables('vtmMarketplacePlan')]",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+      ],
+      "properties": {
+        "overprovision": "true",
+        "upgradePolicy": {
+          "mode": "Automatic"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "vhdContainers": [
+                "[variables('storageContainer')]"
+              ],
+              "name": "[parameters('osDiskName')]",
+              "caching": "ReadOnly",
+              "createOption": "FromImage"
+            },
+            "imageReference": "[variables('imageReference')]"
+          },
+          "osProfile": {
+            "computerNamePrefix": "[parameters('computerNamePrefix')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "netconfiginfo",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "nic",
+                      "properties": {
+                        "subnet": {
+                          "id": "[variables('subnetId1')]"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[variables('lbBeAddrPoolId')]"
+                          }
+                        ],
+                        "loadBalancerInboundNatPools": [
+                          {
+                            "id": "[variables('lbInNatPoolId')]"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
