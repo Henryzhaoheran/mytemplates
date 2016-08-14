@@ -1,0 +1,70 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "applicationGatewayName": {
+      "value": "webgw1"
+    },
+    "appGwName": {
+      "value": "Standard_Medium"
+    },
+    "appGWTier": {
+      "value": "Standard"
+    },
+    "appGwCap": {
+      "value": 2
+    },
+    "certData": {
+      "value": "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"
+    },
+    "vmssname": {
+      "value": "vmsscooldemo"
+    },
+    "vmSize": {
+      "value": "Standard_DS1"
+    },
+    "instanceCount": {
+      "value": 3
+    },
+    "storageAccountName": {
+      "value": "heranstor5"
+    },
+    "storAccountType": {
+      "value": "Premium_LRS"
+    },
+    "osDiskName": {
+      "value": "osdisk"
+    },
+    "computerNamePrefix": {
+      "value": "mycomp"
+    },
+    "vnetName": {
+      "value": "heranvnet3"
+    },
+    "vnetAddrPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "subnetName1": {
+      "value": "vnet3sub1"
+    },
+    "subnet1Prefix": {
+      "value": "10.3.1.0/24"
+    },
+    "subnetName2": {
+      "value": "vnet3sub2"
+    },
+    "subnet2Prefix": {
+      "value": "10.3.2.0/24"
+    },
+    "PublicIPName1": {
+      "value": "pip1"
+    },
+    "PublicIPName2": {
+      "value": "pip2"
+    },
+    "lbName": { "value": "lb1" },
+    "upgradePolicy": {
+      "value": "Manual"
+    }
+  }
+}
