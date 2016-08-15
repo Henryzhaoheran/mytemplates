@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>4e9215d4-b518-4f06-ba68-15b1afc7f671</ProjectGuid>
+    <ProjectGuid>086249c3-483f-4d05-8d45-6b5be878d418</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworkIdentifier>Deployment</TargetFrameworkIdentifier>
@@ -32,9 +32,8 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
-    <Content Include="Templates\azuredeploy.json" />
-    <Content Include="Templates\azuredeploy.parameters.json" />
-    <None Include="Templates\json.json" />
+    <Content Include="Templates\vmss6.json" />
+    <Content Include="Templates\vmss6.answer.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

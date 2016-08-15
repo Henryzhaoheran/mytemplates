@@ -29,6 +29,8 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AppGw1", "AppGw1\AppGw1.dep
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmss5", "vmss5\vmss5.deployproj", "{215C3804-6BE4-4439-9D75-CB2C2A561336}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "vmss6", "vmss6\vmss6.deployproj", "{086249C3-483F-4D05-8D45-6B5BE878D418}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{215C3804-6BE4-4439-9D75-CB2C2A561336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215C3804-6BE4-4439-9D75-CB2C2A561336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215C3804-6BE4-4439-9D75-CB2C2A561336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086249C3-483F-4D05-8D45-6B5BE878D418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086249C3-483F-4D05-8D45-6B5BE878D418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086249C3-483F-4D05-8D45-6B5BE878D418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086249C3-483F-4D05-8D45-6B5BE878D418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
